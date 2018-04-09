@@ -1,0 +1,3 @@
+[submodule "rpi/raspi-recipe"]
+	path = rpi/raspi-recipe
+	url = git@github.com:nodebotanist/raspi-recipe.git
