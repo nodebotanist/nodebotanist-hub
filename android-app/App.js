@@ -43,17 +43,20 @@ export default class App extends Component<Props> {
   }  
   componentDidMount() {
     const client = new mqtt.connect('mqtt://192.168.1.107:1883');
+    
     client.on('connectionLost', (responseObject) => {
       if (responseObject.errorCode !== 0) {
         console.log(responseObject.errorMessage);
       }
     });
-    client.on('messageReceived', (message) => {
+
+    client.on('message', (message) => {
       console.log(message.payloadString);
     });
     
     // connect the client
     client.on('connect', () => {
+        client.subscribe('Hello')
         setInterval(() => {
           client.publish('Hello', 'from the note!');
         }, 5000)
