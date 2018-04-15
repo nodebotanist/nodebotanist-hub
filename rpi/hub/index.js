@@ -1,17 +1,7 @@
 const mosca = require('mosca')
 
 const server = new mosca.Server({
-  interfaces: [
-    {
-      type: 'ws',
-      port: 1337
-    }
-  ],
   port: 1883,
-  persistence: {
-    factory: mosca.persistence.Mongo,
-    url: "mongodb://localhost:27017/mosca"
-  },
   backend: {
     type: 'mongo',
     url: 'mongodb://localhost:27017/mqtt',

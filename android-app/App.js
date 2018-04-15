@@ -4,7 +4,7 @@ import {
   StyleSheet
 } from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
-import { Client, Message } from 'react-native-paho-mqtt';
+import mqtt from 'rn-mqtt'
 
 const myStorage = {
   setItem: (key, item) => {
@@ -15,6 +15,7 @@ const myStorage = {
     delete myStorage[key];
   },
 };
+
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -41,7 +42,7 @@ export default class App extends Component<Props> {
     );
   }  
   componentDidMount() {
-    const client = new Client({ uri: 'ws://192.168.1.107:1883/ws', clientId: 'clientId', storage: myStorage });
+    const client = new mqtt.connect('mqtt://192.168.1.107:1883');
     client.on('connectionLost', (responseObject) => {
       if (responseObject.errorCode !== 0) {
         console.log(responseObject.errorMessage);
@@ -52,25 +53,11 @@ export default class App extends Component<Props> {
     });
     
     // connect the client
-    client.connect()
-      .then(() => {
-        // Once a connection has been made, make a subscription and send a message.
-        console.log('onConnect');
-        return client.subscribe('World');
-      })
-      .then(() => {
+    client.on('connect', () => {
         setInterval(() => {
-          const message = new Message('Hello');
-          message.destinationName = 'Hello';
-          client.send(message);
+          client.publish('Hello', 'from the note!');
         }, 5000)
-      })
-      .catch((responseObject) => {
-        if (responseObject.errorCode !== 0) {
-          console.log('onConnectionLost:' + responseObject.errorMessage);
-        }
-      })
-    ;    
+    })
   }
 }
 
