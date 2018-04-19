@@ -20,8 +20,5 @@ server.on('published', (packet, client) => {
 })
 
 server.on('clientConnected', function(client) {
-  console.log('client connected', client.id);
-  // setInterval(() => {
-  //   server.publish('Hello', 'From the Raspi!')
-  // }, 5000)
-});
+  console.log('client connected', client.id)
+})
