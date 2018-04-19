@@ -81,7 +81,6 @@ void loop() {
   long now = millis();
   if (now - lastMsg > 5000) {
     lastMsg = now;
-    Serial.print("Publish!");
-    client.publish("Hello", "From the ESP8266!");
+    // place timed events and stuff here!
   }
 }
