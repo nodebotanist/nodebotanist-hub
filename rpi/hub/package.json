@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mosca": "^2.8.1"
+    "dotenv": "^5.0.1",
+    "mosca": "^2.8.1",
+    "mqtt": "^2.17.0"
   }
 }

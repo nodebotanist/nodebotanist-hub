@@ -1,4 +1,6 @@
 const mosca = require('mosca')
+const mqtt = require('mqtt')
+const dotenv = require('dotenv').config()
 
 const server = new mosca.Server({
   port: 1883,
@@ -10,8 +12,26 @@ const server = new mosca.Server({
   }
 })
 
+const client = mqtt.connect(process.env.ADAFRUIT_IO_URL, {
+  username: process.env.ADAFRUIT_IO_USERNAME,
+  password: process.env.ADAFRUIT_IO_KEY,
+  port: process.env.ADAFRUIT_IO_PORT
+})
+
+client.on('connect', function () {
+  console.log('CloudMQTT client connected!')
+  client.subscribe("kperch/feeds/twitter")
+})
+
 server.on('ready', () => {
   console.log('MQTT Broker up and running!')
+
+ 
+  client.on('message', function (topic, message) {
+    // message is Buffer
+    console.log(message.toString())
+    client.end()
+  })
 })
 
 server.on('published', (packet, client) => {
