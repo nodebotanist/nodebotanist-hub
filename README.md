@@ -11,6 +11,7 @@ In the `sample-firmware` folder, you'll find firmware for the platforms listed b
 
 * Raspberry Pi
 * ESP8266
+* Tessel 2
 
 # Raspi Hub
 
