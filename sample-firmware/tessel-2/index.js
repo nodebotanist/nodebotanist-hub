@@ -4,11 +4,14 @@ const tesselIO = require('tessel-io')
 const mqtt = require('mqtt')
 
 let board = j5.Board({
-  io: tesselIO
+  io: new tesselIO()
 })
 
 board.on('ready', () => {
-  let client = mqtt.connect('nodebotanist-hub.local')
+  let client = mqtt.connect('nodebotanist-hub.local', {
+    port: 1883,
+    protocol: 'mqtt'
+  })
 
   client.on('connect', () => {
     client.subscribe('Hello')
