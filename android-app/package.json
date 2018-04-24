@@ -12,6 +12,7 @@
     "node-libs-browser": "^2.1.0",
     "react": "16.3.1",
     "react-native": "0.55.1",
+    "react-native-nfc-manager": "^0.4.2",
     "react-native-tcp": "^3.3.0",
     "rn-mqtt": "^2.13.2"
   },
