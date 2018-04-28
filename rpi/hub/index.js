@@ -18,16 +18,15 @@ const client = mqtt.connect(process.env.ADAFRUIT_IO_URL, {
   port: process.env.ADAFRUIT_IO_PORT
 })
 
-client.on('connect', function () {
-  console.log('CloudMQTT client connected!')
-  client.subscribe("kperch/feeds/twitter")
+client.on('connect', function() {
+  console.log('AdafruitIO client connected!')
+  client.subscribe('kperch/feeds/twitter')
 })
 
 server.on('ready', () => {
   console.log('MQTT Broker up and running!')
 
- 
-  client.on('message', function (topic, message) {
+  client.on('message', function(topic, message) {
     // message is Buffer
     console.log(message.toString())
     client.end()
@@ -36,7 +35,11 @@ server.on('ready', () => {
 
 server.on('published', (packet, client) => {
   client = client || { id: 'N/A' }
-  console.log(`Topic: ${packet.topic}\nMessage: ${packet.payload.toString()}\nClient:${client.id}\n\n`)
+  console.log(
+    `Topic: ${packet.topic}\nMessage: ${packet.payload.toString()}\nClient:${
+      client.id
+    }\n\n`
+  )
 })
 
 server.on('clientConnected', function(client) {

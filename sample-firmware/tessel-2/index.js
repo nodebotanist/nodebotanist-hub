@@ -8,14 +8,15 @@ let board = j5.Board({
 })
 
 board.on('ready', () => {
-  let client = mqtt.connect('nodebotanist-hub.local', {
+  console.log('Board ready!')
+  let client = mqtt.connect('192.168.1.107', {
     port: 1883,
-    protocol: 'mqtt'
+    protocol: 'ws'
   })
 
   client.on('connect', () => {
-    client.subscribe('Hello')
     console.log('MQTT client connected to broker')
+    client.subscribe('Hello')
   })
 
   client.on('message', (topic, payload) => {
