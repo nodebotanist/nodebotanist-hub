@@ -88,6 +88,8 @@ void setup()
   strip.show(); // Initialize all pixels to 'off'
 }
 
+uint16_t i, j;
+
 void loop()
 {
   if (!client.connected())
@@ -96,9 +98,7 @@ void loop()
   }
   client.loop();
 
-  Serial.println("Starting Rainbow");
-  rainbow(20);
-  Serial.println("Ending Rainbow");
+  rainbow(100);
 
   long now = millis();
   if (now - lastMsg > 5000)
@@ -110,17 +110,17 @@ void loop()
 
 void rainbow(uint8_t wait)
 {
-  uint16_t i, j;
-
-  for (j = 0; j < 256; j++)
+  j++;
+  if (j > 255)
   {
-    for (i = 0; i < strip.numPixels(); i++)
-    {
-      strip.setPixelColor(i, Wheel((i + j) & 255));
-    }
-    strip.show();
-    delay(wait);
+    j = 0;
   }
+  for (i = 0; i < strip.numPixels(); i++)
+  {
+    strip.setPixelColor(i, Wheel((i + j) & 255));
+  }
+  strip.show();
+  delay(wait);
 }
 
 // Input a value 0 to 255 to get a color value.
